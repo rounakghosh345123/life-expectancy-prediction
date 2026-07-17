@@ -4,10 +4,7 @@ Predicting a country's life expectancy from real health, economic, and education
 
 ## Problem Statement
 
-*(Fill in once you've run the notebook)*
-
-Example starting point:
-> Understanding which development factors most influence life expectancy helps policymakers and health organizations prioritize limited resources. This project builds a predictive model on real World Bank development data to quantify those relationships and identify countries whose outcomes diverge from what their indicators would predict.
+**Understanding which development factors most influence life expectancy helps policymakers and global health organizations prioritize limited resources where they'll have the greatest impact. This project builds a predictive model on real World Bank development data — spanning health, economic, and education indicators across countries and years — to quantify these relationships, and identifies countries whose actual outcomes diverge from what their indicators would predict, flagging cases worth deeper policy investigation.**
 
 ## Dataset
 
@@ -28,24 +25,22 @@ Example starting point:
 
 ## Key Results
 
-*(Fill in with your actual numbers)*
-
 | Model | R² | MAE (years) | RMSE (years) |
 |---|---|---|---|
-| Linear Regression | 0.XX | X.X | X.X |
-| Random Forest | 0.XX | X.X | X.X |
-| XGBoost (tuned) | **0.XX** | **X.X** | **X.X** |
+| Linear Regression | 0.906 | 1.84 | 2.49 |
+| Random Forest | 0.982 | 0.64 | 1.10 |
+| XGBoost (tuned) | **0.979** | **0.63** | **1.18** |
 
-**Top predictive features:**
-1. *(e.g. Under-5 Mortality — strongest predictor)*
-2. *(e.g. HIV Prevalence — ...)*
-3. *(e.g. GDP per Capita — ...)*
+**Note: Random Forest achieved a marginally higher R² than tuned XGBoost — the two performed comparably, with XGBoost selected as the final model for its slightly lower MAE and consistency with the modeling approach across other projects in this portfolio.**
+
+**Top predictive features (by importance):**
+1. **Under5Mortality** (0.828) — by far the dominant predictor; child mortality rate strongly reflects overall healthcare system quality and access
+2. **HIVPrevalence** (0.058) — infectious disease burden remains a meaningful factor even after accounting for child mortality
+3. **GDPPerCapita_log** (0.056) — economic resources matter, but far less than direct health outcomes like child survival
 
 ## Business/Policy Impact
 
-*(Paste your Phase 7 takeaway)*
-
-> Countries over-performing their indicator-predicted life expectancy may have effective health interventions not captured in these 7 features — worth case-study attention. Countries under-performing may warrant investigation into gaps between resource levels and actual outcomes.
+**The residual analysis highlights countries whose actual life expectancy differs significantly from the model's prediction. Under-performing countries (actual < predicted) may face additional challenges—such as political instability, conflict, healthcare accessibility, or socioeconomic inequalities—not captured by the selected features. Conversely, over-performing countries (actual > predicted) may benefit from effective public health policies, stronger healthcare systems, or other positive factors beyond the model's inputs. These cases represent valuable opportunities for further investigation and demonstrate that, while the model captures the major determinants of life expectancy, external real-world factors also play an important role.**
 
 ## How to Run
 
@@ -61,17 +56,34 @@ jupyter notebook life_expectancy_project.ipynb
 streamlit run app.py
 ```
 
-**Note:** the raw dataset isn't included in this repo (World Bank data is large and freely re-downloadable) — follow the data acquisition steps at the top of the notebook to generate `worldbank_data.csv` yourself before running.
-
 ## Live Demo
 
-*(Add your Streamlit Community Cloud link once deployed)*
-
-🔗 [Try the app here](#)
+🔗 [Try the app here](https://life-expectancy-prediction-rvqedwr5wayv4c53czw9cq.streamlit.app/)
 
 ## Screenshots
 
-*(Add: correlation heatmap, feature importance chart, predicted-vs-actual scatter plot, and the app in action)*
+**Life expectancy distribution:**
+![Life Expectancy Distribution](life_expectancy_distribution.png)
+
+**Feature relationships — scatter plots vs. life expectancy:**
+![Feature Scatter Plots](scatter_plots.png)
+
+**Correlation heatmap:**
+![Correlation Heatmap](correlation_heatmap.png)
+
+**Feature importance — Under-5 Mortality dominates as the strongest predictor:**
+![Feature Importance](feature_importance.png)
+
+**Predicted vs. actual life expectancy — near-perfect alignment (R² = 0.979):**
+![Predicted vs Actual](pred_v_act_lifeexpectancy.png)
+
+**Live app — high-indicator country profile (81.8 years predicted):**
+![High Life Expectancy Example](app_high_life_expectancy.png)
+
+**Live app — low-indicator country profile (53.0 years predicted):**
+![Low Life Expectancy Example](app_low_life_expectancy.png)
+
+A **28.8-year spread** between the two extreme test profiles — consistent with real-world differences between the highest and lowest life-expectancy countries globally.
 
 ## Tech Stack
 
